@@ -1,0 +1,51 @@
+{
+  "name": "generator-jhipster-liquibase",
+  "version": "0.0.0",
+  "description": "Incremental liquibase blueprint for jhipster",
+  "keywords": [
+    "yeoman-generator",
+    "jhipster-blueprint",
+    "jhipster-5",
+    "jhipster-6"
+  ],
+  "homepage": "https://github.com/mshima/generator-jhipster-liquibase",
+  "license": "MIT",
+  "author": {
+    "name": "Marcelo Shima",
+    "email": "marceloshima@gmail.com",
+    "url": "https://github.com/mshima"
+  },
+  "files": [
+    "generators",
+    "lib",
+    "utils"
+  ],
+  "main": "generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mshima/generator-jhipster-liquibase.git"
+  },
+  "dependencies": {
+    "chalk": "2.4.1",
+    "generator-jhipster": "6.9.0"
+  },
+  "peerDependencies": {
+    "generator-jhipster": ">=6.9.0"
+  },
+  "devDependencies": {
+    "fs-extra": "^9.0.0",
+    "mocha": "^7.1.2",
+    "xo": "^0.30.0",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-environment": "^2.10.2",
+    "yeoman-test": "^2.5.0"
+  },
+  "scripts": {
+    "fix": "xo --fix",
+    "pretest": "xo",
+    "test": "mocha"
+  },
+  "bugs": {
+    "url": "https://github.com/mshima/generator-jhipster-liquibase/issues"
+  }
+}
