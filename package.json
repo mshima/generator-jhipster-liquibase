@@ -16,6 +16,7 @@
     "url": "https://github.com/mshima"
   },
   "files": [
+    "cli",
     "generators",
     "lib",
     "utils"
