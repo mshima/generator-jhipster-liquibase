@@ -247,12 +247,16 @@ function createGenerator(env) {
         `${this.databaseChangelog.changelogDate}_updated_entity_${this.entity.entityClass}`
       );
       if (hasConstraints) {
-        this.writeFilesToDisk(updateConstraintsFiles, this, false, this.sourceRoot());
-        this.writeFilesToDisk(updateMigrateFiles, this, false, this.sourceRoot());
+        if (this.databaseChangelog.constraintsPreparation) {
+          this.writeFilesToDisk(updateMigrateFiles, this, false, this.sourceRoot());
 
-        this.addIncrementalChangelogToLiquibase(
-          `${this.databaseChangelog.changelogDate}_updated_entity_migrate_${this.entity.entityClass}`
-        );
+          this.addIncrementalChangelogToLiquibase(
+            `${this.databaseChangelog.changelogDate}_updated_entity_migrate_${this.entity.entityClass}`
+          );
+        }
+
+        this.writeFilesToDisk(updateConstraintsFiles, this, false, this.sourceRoot());
+
         this.addIncrementalChangelogToLiquibase(
           `${this.databaseChangelog.changelogDate}_updated_entity_constraints_${this.entity.entityClass}`
         );

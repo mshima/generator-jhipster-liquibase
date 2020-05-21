@@ -78,14 +78,11 @@ describe('JHipster application generator with liquibase', () => {
         } else if (changelog.type !== 'entity-snapshot' && changelog.type.startsWith('entity-')) {
           const updatedFile = `config/liquibase/changelog/${changelog.changelogDate}_updated_entity_${changelog.entityName}.xml`;
           const constrainFile = `config/liquibase/changelog/${changelog.changelogDate}_updated_entity_constraints_${changelog.entityName}.xml`;
-          const migrateFile = `config/liquibase/changelog/${changelog.changelogDate}_updated_entity_migrate_${changelog.entityName}.xml`;
           changelogFileExists(updatedFile);
           if (changelog.hasConstraints) {
             changelogFileExists(constrainFile);
-            changelogFileExists(migrateFile);
           } else {
             changelogFileDoesntExists(constrainFile);
-            changelogFileDoesntExists(migrateFile);
           }
         } else if (changelog.type === 'tag') {
           const relPath = `config/liquibase/changelog/${changelog.changelogDate}_tag_${changelog.name}.xml`;
