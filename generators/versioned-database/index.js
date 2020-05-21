@@ -18,9 +18,8 @@
  */
 const fs = require('fs');
 
-
 function createGenerator(env) {
-  const packagePath = env.getPackagePath('jhipster');
+  const packagePath = env.getPackagePath('jhipster:app');
   const {parseLiquibaseChangelogDate} = require(`${packagePath}/utils/liquibase`);
   return class extends env.requireGenerator('jhipster-liquibase:base') {
     constructor(args, options) {

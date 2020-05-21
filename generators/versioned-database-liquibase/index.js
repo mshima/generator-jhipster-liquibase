@@ -25,10 +25,10 @@ const LiquibaseRelationship = require('../../lib/liquibase-relationship');
 const {addEntityFiles, updateEntityFiles, updateConstraintsFiles, updateMigrateFiles, fakeFiles} = require('./files');
 
 function createGenerator(env) {
-  const packagePath = env.getPackagePath('jhipster');
+  const packagePath = env.getPackagePath('jhipster:app');
   const {stringHashCode, RandexpWithFaker} = require(`${packagePath}/generators/utils`);
   const constants = require(`${packagePath}/generators/generator-constants`);
-  const { INTERPOLATE_REGEX, LIQUIBASE_DTD_VERSION, SERVER_MAIN_RES_DIR } = constants;
+  const {INTERPOLATE_REGEX, LIQUIBASE_DTD_VERSION, SERVER_MAIN_RES_DIR} = constants;
   const {getRecentDateForLiquibase} = require(`${packagePath}/utils/liquibase`);
 
   return class extends env.requireGenerator('jhipster-liquibase:base') {

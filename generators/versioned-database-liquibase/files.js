@@ -108,7 +108,7 @@ const fakeFiles = {
         {
           file: 'config/liquibase/fake-data/table_entity.csv',
           options: {
-            interpolate: INTERPOLATE_REGEX,
+            interpolate: INTERPOLATE_REGEX
           },
           renameTo: generator => {
             if (generator.databaseChangelog.migration) {
