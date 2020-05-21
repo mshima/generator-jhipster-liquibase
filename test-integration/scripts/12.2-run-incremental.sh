@@ -4,7 +4,7 @@ set -e
 source $(dirname $0)/00-init-env.sh
 
 cd "$JHI_FOLDER_APP"
-rm -rf node_modules/generator-jhipster
+npm uninstall generator-jhipster generator-jhipster-liquibase
 
 if [[ "$JHI_LIQUIBASE" == "jdl" ]]; then
     #-------------------------------------------------------------------------------
