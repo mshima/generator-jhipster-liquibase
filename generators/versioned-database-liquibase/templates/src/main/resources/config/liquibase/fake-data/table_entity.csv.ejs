@@ -73,73 +73,73 @@ for (lineNb = 1; lineNb <= numberOfRows; lineNb++) {
             || columnType === 'bigint'
             || columnType === 'double'
             || columnType.startsWith('decimal')) {
-            data = this.faker.random.number({
+            data = faker.random.number({
                 max: fields[idx].fieldValidateRulesMax ? parseInt(fields[idx].fieldValidateRulesMax) : undefined,
                 min: fields[idx].fieldValidateRulesMin ? parseInt(fields[idx].fieldValidateRulesMin) : undefined
             });
         } else if (columnType === '${floatType}') {
-            data = this.faker.random.number({
+            data = faker.random.number({
                 max: fields[idx].fieldValidateRulesMax ? parseFloat(fields[idx].fieldValidateRulesMax) : undefined,
                 min: fields[idx].fieldValidateRulesMin ? parseFloat(fields[idx].fieldValidateRulesMin) : undefined
             });
         } else if (columnType === '${uuidType}') {
-            data = this.faker.random.uuid();
+            data = faker.random.uuid();
         } else if (columnType === 'boolean') {
-            data = this.faker.random.boolean();
+            data = faker.random.boolean();
         } else if (columnType === 'date') {
-            data = this.getRecentDateForLiquibase(1, changelogDate).toISOString().split('T')[0];
+            data = getRecentDateForLiquibase(1, changelogDate).toISOString().split('T')[0];
         } else if (columnType === 'datetime') {
             // Write the date without milliseconds so Java can parse it
             // See https://stackoverflow.com/a/34053802/150868
-            data = this.getRecentDateForLiquibase(1, changelogDate).toISOString().split('.')[0];
+            data = getRecentDateForLiquibase(1, changelogDate).toISOString().split('.')[0];
         } else if (columnType.startsWith('varchar')) {
             let columnName = fields[idx].columnName;
             if (columnName === 'first_name') {
-                data = this.faker.name.firstName();
+                data = faker.name.firstName();
             } else if (columnName === 'last_name') {
-                data = this.faker.name.lastName();
+                data = faker.name.lastName();
             } else if (columnName === 'job_title') {
-                data = this.faker.name.jobTitle();
+                data = faker.name.jobTitle();
             } else if (columnName === 'telephone' || columnName === 'phone') {
-                data = this.faker.phone.phoneNumber();
+                data = faker.phone.phoneNumber();
             } else if (columnName === 'zip_code' || columnName === 'post_code') {
-                data = this.faker.address.zipCode();
+                data = faker.address.zipCode();
             } else if (columnName === 'city') {
-                data = this.faker.address.city();
+                data = faker.address.city();
             } else if (columnName === 'street_name' || columnName === 'street') {
-                data = this.faker.address.streetName();
+                data = faker.address.streetName();
             } else if (columnName === 'country') {
-                data = this.faker.address.country();
+                data = faker.address.country();
             } else if (columnName === 'country_code') {
-                data = this.faker.address.countryCode();
+                data = faker.address.countryCode();
             } else if (columnName === 'color') {
-                data = this.faker.commerce.color();
+                data = faker.commerce.color();
             } else if (columnName === 'account') {
-                data = this.faker.commerce.account();
+                data = faker.commerce.account();
             } else if (columnName === 'account_name') {
-                data = this.faker.finance.accountName();
+                data = faker.finance.accountName();
             } else if (columnName === 'currency_code') {
-                data = this.faker.finance.currencyCode();
+                data = faker.finance.currencyCode();
             } else if (columnName === 'currency_name') {
-                data = this.faker.finance.currencyName();
+                data = faker.finance.currencyName();
             } else if (columnName === 'currency_symbol') {
-                data = this.faker.finance.currencySymbol();
+                data = faker.finance.currencySymbol();
             } else if (columnName === 'iban') {
-                data = this.faker.finance.iban();
+                data = faker.finance.iban();
             } else if (columnName === 'bic') {
-                data = this.faker.finance.bic();
+                data = faker.finance.bic();
             } else if (columnName === 'email') {
-                data = this.faker.internet.email();
+                data = faker.internet.email();
             } else if (columnName === 'url') {
-                data = this.faker.internet.url();
+                data = faker.internet.url();
             } else {
-                data = this.faker.random.words();
+                data = faker.random.words();
             }
         }
         if (fields[idx].fieldIsEnum) {
             if (fields[idx].fieldValues.length !== 0) {
                 const enums = fields[idx].fieldValues.split(',');
-                data = enums[this.faker.random.number(enums.length-1)];
+                data = enums[faker.random.number(enums.length-1)];
             } else {
                 data = '';
             }
@@ -153,7 +153,7 @@ for (lineNb = 1; lineNb <= numberOfRows; lineNb++) {
         // Validation rules
         if (fields[idx].fieldValidate === true) {
             if (fields[idx].fieldValidateRules.includes('pattern')) {
-                const randExp = new this.randexp(fields[idx].fieldValidateRulesPattern)
+                const randExp = new randexp(fields[idx].fieldValidateRulesPattern)
                 data = `"${randExp.gen().replace(/"/g, '')}"`;
             }
 
@@ -208,7 +208,7 @@ for (lineNb = 1; lineNb <= numberOfRows; lineNb++) {
             ) && (relationships[idx].relationshipValidate === true && relationships[idx].relationshipRequired)
         ) {
             if (relationships[idx].otherEntityNameCapitalized === 'User') {
-                line.push(this.faker.random.number({min: 1, max: 2}));
+                line.push(faker.random.number({min: 1, max: 2}));
             } else {
                 line.push(lineNb);
             }

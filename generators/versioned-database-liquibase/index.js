@@ -18,22 +18,27 @@
  */
 const assert = require('assert');
 const faker = require('faker');
-const utils = require('generator-jhipster/generators/utils');
 
 const LiquibaseEntity = require('../../lib/liquibase-entity');
 const Field = require('../../lib/field');
 const LiquibaseRelationship = require('../../lib/liquibase-relationship');
-const constants = require('generator-jhipster/generators/generator-constants');
 const {addEntityFiles, updateEntityFiles, updateConstraintsFiles, updateMigrateFiles, fakeFiles} = require('./files');
 
-const INTERPOLATE_REGEX = constants.INTERPOLATE_REGEX;
-const SERVER_MAIN_RES_DIR = constants.SERVER_MAIN_RES_DIR;
-
 function createGenerator(env) {
+  const packagePath = env.getPackagePath('jhipster');
+  const {stringHashCode, RandexpWithFaker} = require(`${packagePath}/generators/utils`);
+  const constants = require(`${packagePath}/generators/generator-constants`);
+  const { INTERPOLATE_REGEX, LIQUIBASE_DTD_VERSION, SERVER_MAIN_RES_DIR } = constants;
+  const {getRecentDateForLiquibase} = require(`${packagePath}/utils/liquibase`);
+
   return class extends env.requireGenerator('jhipster-liquibase:base') {
     constructor(args, options) {
       super(args, options);
       this.configOptions = options.configOptions || {};
+
+      this.getRecentDateForLiquibase = getRecentDateForLiquibase;
+      this.randexp = RandexpWithFaker;
+      this.faker = faker;
 
       assert(this.options.databaseChangelog, 'Changelog is required');
     }
@@ -43,7 +48,7 @@ function createGenerator(env) {
       return {
         setupConstants() {
           // Make constants available in templates
-          this.LIQUIBASE_DTD_VERSION = constants.LIQUIBASE_DTD_VERSION;
+          this.LIQUIBASE_DTD_VERSION = LIQUIBASE_DTD_VERSION;
         }
       };
     }
@@ -61,7 +66,7 @@ function createGenerator(env) {
           }
 
           // In order to have consistent results with Faker, restart seed with current entity name hash.
-          faker.seed(utils.stringHashCode(this.options.databaseChangelog.entityName.toLowerCase()));
+          faker.seed(stringHashCode(this.options.databaseChangelog.entityName.toLowerCase()));
         },
 
         writeLiquibaseFiles() {
@@ -151,7 +156,7 @@ function createGenerator(env) {
         `${SERVER_MAIN_RES_DIR}config/liquibase/changelog/${destFile}.xml`,
         this,
         {interpolate: INTERPOLATE_REGEX},
-        {changelog, LIQUIBASE_DTD_VERSION: constants.LIQUIBASE_DTD_VERSION}
+        {changelog, LIQUIBASE_DTD_VERSION}
       );
       this.addIncrementalChangelogToLiquibase(destFile);
     }

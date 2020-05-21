@@ -16,16 +16,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const faker = require('faker');
 
-const utils = require('generator-jhipster/generators/utils');
-const liquibaseUtils = require('generator-jhipster/utils/liquibase');
 /* Constants use throughout */
-const {INTERPOLATE_REGEX, SERVER_MAIN_RES_DIR} = require('generator-jhipster/generators/generator-constants');
-
-/* Use customized randexp */
-const randexp = utils.RandexpWithFaker;
-const getRecentDateForLiquibase = liquibaseUtils.getRecentDateForLiquibase;
+const INTERPOLATE_REGEX = /<%:([\s\S]+?)%>/g;
+const SERVER_MAIN_RES_DIR = 'src/main/resources/';
 
 const addEntityFiles = {
   dbChangelog: [
@@ -115,11 +109,6 @@ const fakeFiles = {
           file: 'config/liquibase/fake-data/table_entity.csv',
           options: {
             interpolate: INTERPOLATE_REGEX,
-            context: {
-              getRecentDateForLiquibase,
-              faker,
-              randexp
-            }
           },
           renameTo: generator => {
             if (generator.databaseChangelog.migration) {
